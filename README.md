@@ -14,12 +14,14 @@ I am current have worked on two games. Those are:
 - [Solenoid](https://github.com/Avery246813579/Solenoid) - A game I wrote for Ludum Dare a few years back. Also has a custom engine
 
 ## TODO 
-- Shaders
-- Canvas
-- Input with listeners
 - Animations
-- co.frostbyte.jge.Sprite with Collisions
 - Entities
+- Draw Text
+- co.frostbyte.jge.Sprite with Collisions
+- Canvas with Viewport
+- Input with listeners
+
+- Improve Shader Speed
 
 Games I want to make: 
 - Animal Crossing

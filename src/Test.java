@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +23,11 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 	public static final double SCALE = 1;
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-	private int[] pure = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private Sprite bird = new Sprite("bird.png");
 	Map<Integer, Integer> lights = new HashMap<Integer, Integer>();
-
+	private float max = 5F, min = 0.2F;
 	List<Point> clicks = new ArrayList<Point>();
+	List<Integer> keyDown = new ArrayList<Integer>();
 
 	private int[] steve;
 	private int sW, sH;
@@ -127,13 +126,27 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 	}
 
 	public void update() {
+		for (int code : keyDown) {
+			if (code == KeyEvent.VK_D) {
+				bird.getPoint().moveX(2);
+			}
 
+			if (code == KeyEvent.VK_A) {
+				bird.getPoint().moveX(-2);
+			}
+
+			if (code == KeyEvent.VK_W) {
+				bird.getPoint().moveY(-2);
+			}
+
+			if (code == KeyEvent.VK_S) {
+				bird.getPoint().moveY(2);
+			}
+		}
 	}
 
 	public void init() {
 		bird.draw(pixels, WIDTH, HEIGHT);
-
-		pure = pixels.clone();
 	}
 
 	public void draw() {
@@ -152,7 +165,6 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 			}
 		}
 
-		bird.move();
 		bird.draw(pixels, WIDTH, HEIGHT);
 
 		for (int x = 0; x < WIDTH; x++) {
@@ -162,9 +174,9 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				int g = (color & 0xff00) >> 8;
 				int b = (color & 0xff);
 
-				r *= .3;
-				g *= .3;
-				b *= .3;
+				r *= min;
+				g *= min;
+				b *= min;
 
 				if (r > 255)
 					r = 255;
@@ -177,6 +189,9 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 			}
 		}
 
+		lights.clear();
+
+		toAdd.add(bird.getPoint());
 		for (Point point : toAdd) {
 			for (int x = point.getX() - 75; x < point.getX() + 75; x++) {
 				for (int y = point.getY() - 75; y < point.getY() + 75; y++) {
@@ -188,21 +203,23 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				}
 			}
 		}
-		
-		toAdd.clear();
-		
-		for (java.util.Map.Entry<Integer, Integer> entry : lights.entrySet()) {
-			int color = pixels[entry.getKey()];
 
+		toAdd.clear();
+
+		for (java.util.Map.Entry<Integer, Integer> entry : lights.entrySet()) {
+			if (entry.getKey() >= WIDTH * HEIGHT || entry.getKey() < 0) {
+				continue;
+			}
+			int color = pixels[entry.getKey()];
 			int r = (color & 0xff0000) >> 16;
 			int g = (color & 0xff00) >> 8;
 			int b = (color & 0xff);
 
 			int a = entry.getKey();
-			if (a > 3) {
-				a = 3;
+			if (a > max) {
+				a = (int) max;
 			}
-			
+
 			r *= a;
 			g *= a;
 			b *= a;
@@ -216,15 +233,12 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 
 			pixels[entry.getKey()] = r << 16 | g << 8 | b;
 		}
-
-		// reRender();
 	}
 
 	List<Point> toAdd = new ArrayList<Point>();
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		toAdd.add(new Point(event.getX(), event.getY()));
 	}
 
 	@Override
@@ -254,14 +268,22 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				clicks.remove(clicks.size() - 1);
 			}
 		}
+
+		keyDown.add(event.getKeyCode());
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
+	public void keyReleased(KeyEvent event) {
+		int code = keyDown.indexOf(event.getKeyCode());
+		
+		if (code == -1) {
+			return;
+		}
+		
+		keyDown.remove(code);
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-
+	public void keyTyped(KeyEvent event) {
 	}
 }

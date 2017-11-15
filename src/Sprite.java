@@ -44,4 +44,8 @@ public class Sprite {
 		point.moveX(1);
 		point.moveY(1);
 	}
+	
+	public Point getPoint() {
+		return point;
+	}
 }

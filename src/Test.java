@@ -76,7 +76,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 
 		long lastTime = System.nanoTime();
 		double delta = 0.0;
-		double ns = 1000000000.0 / 60.0;
+		double ns = 1000000000.0 / 30.0;
 		long timer = System.currentTimeMillis();
 		int updates = 0;
 		int frames = 0;

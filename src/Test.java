@@ -24,10 +24,10 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private Sprite bird = new Sprite("bird.png");
-	Map<Integer, Integer> lights = new HashMap<Integer, Integer>();
+	Map<Integer, Integer> lights = new HashMap<>();
 	private float max = 5F, min = 0.2F;
-	List<Point> clicks = new ArrayList<Point>();
-	List<Integer> keyDown = new ArrayList<Integer>();
+	List<Point> clicks = new ArrayList<>();
+	List<Integer> keyDown = new ArrayList<>();
 
 	private int[] steve;
 	private int sW, sH;

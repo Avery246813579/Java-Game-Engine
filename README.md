@@ -17,7 +17,7 @@ I am current have worked on two games. Those are:
 - Shaders
 - Input with listeners
 - Animations
-- Sprite with Collisions
+- co.frostbyte.jge.Sprite with Collisions
 - Entities
 
 Games I want to make: 

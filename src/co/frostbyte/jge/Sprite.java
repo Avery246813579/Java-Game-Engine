@@ -1,3 +1,5 @@
+package co.frostbyte.jge;
+
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;

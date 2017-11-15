@@ -1,3 +1,4 @@
+package co.frostbyte.jge;
 
 public class Point {
 	private int x, y;

@@ -24,8 +24,9 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private Sprite bird = new Sprite("/bird.png");
     private Map<Integer, Integer> lights = new HashMap<>();
-    private final float max = 5F, min = 0.2F;
+    private final float max = 64F, min = 1 / max;
     private List<Integer> keyDown = new ArrayList<>();
+    private List<Integer> alteredKeys = new ArrayList<>();
 
     private int[] steve;
     private int sW, sH;
@@ -72,7 +73,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 
         long lastTime = System.nanoTime();
         double delta = 0.0;
-        double ns = 1000000000.0 / 30.0;
+        double ns = 1000000000.0 / 45.0;
         long timer = System.currentTimeMillis();
         int updates = 0;
         int frames = 0;
@@ -115,38 +116,40 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
     }
 
     public void update() {
-//        Iterator<Integer> iter = keyDown.iterator();
+        keyDown = alteredKeys.subList(0, alteredKeys.size());
 
-//        while (iter.hasNext()) {
-//            int code = iter.next();
-//
-//            if (code == KeyEvent.VK_D) {
-//                bird.getPoint().moveX(2);
-//            }
-//
-//            if (code == KeyEvent.VK_A) {
-//                bird.getPoint().moveX(-2);
-//            }
-//
-//            if (code == KeyEvent.VK_W) {
-//                bird.getPoint().moveY(-2);
-//            }
-//
-//            if (code == KeyEvent.VK_S) {
-//                bird.getPoint().moveY(2);
-//            }
-//        }
+        Iterator<Integer> iter = keyDown.iterator();
 
-        bird.move();
+        while (iter.hasNext()) {
+            int code = iter.next();
+
+            if (code == KeyEvent.VK_D) {
+                bird.getPoint().moveX(5);
+            }
+
+            if (code == KeyEvent.VK_A) {
+                bird.getPoint().moveX(-5);
+            }
+
+            if (code == KeyEvent.VK_W) {
+                bird.getPoint().moveY(-5);
+            }
+
+            if (code == KeyEvent.VK_S) {
+                bird.getPoint().moveY(5);
+            }
+        }
+
+//        bird.move();
     }
 
     public void draw() {
         for (int x = 0; x < sW; x++) {
-            if (x < 0 || x > WIDTH)
+            if (x < 0 || x > WIDTH - 1)
                 continue;
 
             for (int y = 0; y < sH; y++) {
-                if (y < 0 || y > HEIGHT)
+                if (y < 0 || y > HEIGHT - 1)
                     continue;
 
                 try {
@@ -157,6 +160,8 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
         }
 
         bird.draw(pixels, WIDTH, HEIGHT);
+
+        int[] unharmed = pixels.clone();
 
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -189,7 +194,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
                     if (lights.get(x + y * WIDTH) != null) {
                         lights.put(x + y * WIDTH, lights.get(x + y * WIDTH) + 1);
                     } else {
-                        lights.put(x + y * WIDTH, 1);
+                        lights.put(x + y * WIDTH, 2);
                     }
                 }
             }
@@ -201,19 +206,14 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
             if (entry.getKey() >= WIDTH * HEIGHT || entry.getKey() < 0) {
                 continue;
             }
-            int color = pixels[entry.getKey()];
+            int color = unharmed[entry.getKey()];
             int r = (color & 0xff0000) >> 16;
             int g = (color & 0xff00) >> 8;
             int b = (color & 0xff);
 
-            int a = entry.getKey();
-            if (a > max) {
-                a = (int) max;
-            }
-
-            r *= a;
-            g *= a;
-            b *= a;
+            r *= (1.0/entry.getValue());
+            g *= (1.0/entry.getValue());
+            b *= (1.0/entry.getValue());
 
             if (r > 255)
                 r = 255;
@@ -254,18 +254,19 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 
     @Override
     public void keyPressed(KeyEvent event) {
-        keyDown.add(event.getKeyCode());
+        System.out.println(event.getKeyCode());
+        alteredKeys.add(event.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
-        int code = keyDown.indexOf(event.getKeyCode());
+        int code = alteredKeys.indexOf(event.getKeyCode());
 
         if (code == -1) {
             return;
         }
 
-        keyDown.remove(code);
+        alteredKeys.remove(code);
     }
 
     @Override

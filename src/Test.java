@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private int[] pure = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	private Sprite bird = new Sprite("bird.png");
+	Map<Integer, Integer> lights = new HashMap<Integer, Integer>();
 
 	List<Point> clicks = new ArrayList<Point>();
 
@@ -49,7 +52,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		init();
 	}
 
@@ -92,6 +95,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
+				System.out.println(lights.size());
 				System.out.println(updates + " ups, " + frames + " fps");
 				frames = 0;
 				updates = 0;
@@ -107,7 +111,7 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 		}
 
 		draw();
-		
+
 		Graphics g = bs.getDrawGraphics();
 
 		g.drawImage(image, 0, 0, (int) (WIDTH * SCALE), (int) (HEIGHT * SCALE), null);
@@ -127,6 +131,12 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 	}
 
 	public void init() {
+		bird.draw(pixels, WIDTH, HEIGHT);
+
+		pure = pixels.clone();
+	}
+
+	public void draw() {
 		for (int x = 0; x < sW; x++) {
 			if (x < 0 || x > WIDTH)
 				continue;
@@ -141,6 +151,9 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				}
 			}
 		}
+
+		bird.move();
+		bird.draw(pixels, WIDTH, HEIGHT);
 
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
@@ -163,18 +176,8 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				pixels[x + y * WIDTH] = r << 16 | g << 8 | b;
 			}
 		}
-		
-		pure = pixels.clone();
-	}
-	
-	public void reRender() {
-//		pixels = pure.clone();
-		reset();
-		
-		Map<Integer, Integer> lights = new HashMap<Integer, Integer>();
-		for (int i = 0; i < clicks.size(); i++) {
-			Point point = clicks.get(i);
-			
+
+		for (Point point : toAdd) {
 			for (int x = point.getX() - 75; x < point.getX() + 75; x++) {
 				for (int y = point.getY() - 75; y < point.getY() + 75; y++) {
 					if (lights.get(x + y * WIDTH) != null) {
@@ -185,16 +188,17 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 				}
 			}
 		}
-
-		System.out.println(lights.size());
-		for (int keys : lights.keySet()) {
-			int color = pixels[keys];
+		
+		toAdd.clear();
+		
+		for (java.util.Map.Entry<Integer, Integer> entry : lights.entrySet()) {
+			int color = pixels[entry.getKey()];
 
 			int r = (color & 0xff0000) >> 16;
 			int g = (color & 0xff00) >> 8;
 			int b = (color & 0xff);
 
-			int a = (2 * lights.get(keys));
+			int a = entry.getKey();
 			if (a > 3) {
 				a = 3;
 			}
@@ -210,24 +214,17 @@ public class Test extends Canvas implements Runnable, MouseListener, KeyListener
 			if (b > 255)
 				b = 255;
 
-			pixels[keys] = r << 16 | g << 8 | b;
+			pixels[entry.getKey()] = r << 16 | g << 8 | b;
 		}
-	}
-	
-	public void reset() {
-		for (int i = 0; i < pure.length; i++) {
-			pixels[i] = pure[i];
-		}
+
+		// reRender();
 	}
 
-	public void draw() {
-	}
+	List<Point> toAdd = new ArrayList<Point>();
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		clicks.add(new Point(event.getX(), event.getY()));
-		
-		reRender();
+		toAdd.add(new Point(event.getX(), event.getY()));
 	}
 
 	@Override

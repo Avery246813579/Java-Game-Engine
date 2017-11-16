@@ -1,9 +1,13 @@
 package co.frostbyte.jge.shaders;
 
+import co.frostbyte.jge.Sprite;
 import co.frostbyte.jge.Test2;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ShaderManager {
-    public static boolean ENABLED = true;
+    public static boolean ENABLED = false;
 
     // 24 = Dark and 1 - Light
     public static int ALPHA = 12;
@@ -14,7 +18,7 @@ public class ShaderManager {
     }
 
     public static void draw(int[] pixels) {
-        if (!ENABLED){
+        if (!ENABLED) {
             return;
         }
 
@@ -42,5 +46,36 @@ public class ShaderManager {
             }
         }
 
+        Map<Integer, Integer> lighting = new HashMap<>();
+        for (Sprite sprite : Test2.sprites) {
+            Shade shade = (Shade) sprite.getComponent(Shade.class);
+
+            if (shade != null) {
+                shade.draw(pixels, lighting, sprite.getPoint());
+            }
+        }
+
+        for (java.util.Map.Entry<Integer, Integer> entry : lighting.entrySet()) {
+            if (entry.getKey() >= Test2.WIDTH * Test2.HEIGHT || entry.getKey() < 0) {
+                continue;
+            }
+            int color = preRender[entry.getKey()];
+            int r = (color & 0xff0000) >> 16;
+            int g = (color & 0xff00) >> 8;
+            int b = (color & 0xff);
+
+            r *= (1.0 / entry.getValue());
+            g *= (1.0 / entry.getValue());
+            b *= (1.0 / entry.getValue());
+
+            if (r > 255)
+                r = 255;
+            if (g > 255)
+                g = 255;
+            if (b > 255)
+                b = 255;
+
+            pixels[entry.getKey()] = r << 16 | g << 8 | b;
+        }
     }
 }

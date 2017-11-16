@@ -28,6 +28,10 @@ public class Sprite {
     }
 
     public void draw(int[] pixels, int screenWidth, int screenHeight) {
+        if (point.getX() > screenWidth || point.getY() > screenHeight){
+            return;
+        }
+
         for (int x = point.getX(); x < point.getX() + width; x++) {
             if (x < 0 || x > screenWidth - 1)
                 break;
@@ -52,15 +56,21 @@ public class Sprite {
         point.moveY(1);
     }
 
+    public Component getComponent(Class<?> target){
+        for(Component component : components){
+            if (target.isAssignableFrom(component.getClass())){
+                return component;
+            }
+        }
+
+        return null;
+    }
+
     public Point getPoint() {
         return point;
     }
 
     public List<Component> getComponents() {
         return components;
-    }
-
-    public void setComponents(List<Component> components) {
-        this.components = components;
     }
 }

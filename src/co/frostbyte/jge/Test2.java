@@ -1,6 +1,7 @@
 package co.frostbyte.jge;
 
 import co.frostbyte.jge.shaders.ShaderManager;
+import co.frostbyte.jge.shaders.Square;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
 
     private List<Point> toAdd = new ArrayList<Point>();
     private Sprite bird = new Sprite("/bird.png");
+    private Sprite bird2 = new Sprite("/bird.png");
     private Sprite trump = new Sprite("/TEST.jpg");
     private Map<Integer, Integer> lights = new HashMap<>();
     private final float max = 64F, min = 1 / max;
@@ -48,6 +50,10 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
         addMouseListener(this);
         addKeyListener(this);
 
+        sprites.add(bird);
+        sprites.add(bird2);
+        bird.getComponents().add(new Square());
+//        bird2.getComponents().add(new Square());
 
 //        screen = new Screen(WIDTH, HEIGHT);
 //        new SpriteSheet("/sprites.png");
@@ -139,6 +145,8 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
                 bird.getPoint().moveY(5);
             }
         }
+
+        bird2.move();
     }
 
     public void render() {
@@ -157,7 +165,10 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
 
     public void draw() {
         trump.draw(pixels, WIDTH, HEIGHT);
-        bird.draw(pixels, WIDTH, HEIGHT);
+
+        for (Sprite sprite : sprites){
+            sprite.draw(pixels, WIDTH, HEIGHT);
+        }
 
         lights.clear();
 

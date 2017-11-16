@@ -2,14 +2,12 @@ package co.frostbyte.jge;
 
 import co.frostbyte.jge.shaders.ShaderManager;
 import co.frostbyte.jge.shaders.Square;
+import co.frostbyte.jge.shaders.StaticShade;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -17,7 +15,7 @@ import java.util.*;
 
 import javax.swing.JFrame;
 
-public class Test2 extends Canvas implements Runnable, MouseListener, KeyListener {
+public class GameManager extends Canvas implements Runnable, MouseListener, KeyListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
 
     public final static int WIDTH = 800;
@@ -29,11 +27,9 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
     private Sprite bird = new Sprite("/bird.png");
     private Sprite bird2 = new Sprite("/bird.png");
     private Sprite trump = new Sprite("/TEST.jpg");
-    private Map<Integer, Integer> lights = new HashMap<>();
-    private final float max = 64F, min = 1 / max;
     private List<Integer> keyDown = new ArrayList<>();
-
     public static List<Sprite> sprites = new ArrayList<>();
+    private StaticShade mouse = new StaticShade(new Point(0, 0), new Square());
 
     private Thread thread;
     private boolean running = false;
@@ -42,36 +38,21 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private JFrame frame;
 
-    public Test2() {
+
+    public GameManager() {
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
         addMouseListener(this);
         addKeyListener(this);
+        addMouseMotionListener(this);
 
         sprites.add(bird);
         sprites.add(bird2);
         bird.getComponents().add(new Square());
 //        bird2.getComponents().add(new Square());
-
-//        screen = new Screen(WIDTH, HEIGHT);
-//        new SpriteSheet("/sprites.png");
-//        input = new InputHandler();
-//        setMenuLevel();
-//        menu = new MainMenu(input);
-//        map = new Map();
-//        addKeyListener(input);
-//        addFocusListener(input);
-    }
-
-    public static void setMenuLevel() {
-//		Sound.menutheme.play(true);
-//        level = new Level("/levels/test.png");
-//        player = new Player(input);
-//        for (int i = 0; i < 20; i++) {
-//            level.add(new MenuMob());
-//        }
+        ShaderManager.STATIC_SHADES.add(mouse);
     }
 
     public synchronized void start() {
@@ -99,6 +80,7 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
         int frames = 0;
         int updates = 0;
         requestFocus();
+
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -170,52 +152,11 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
             sprite.draw(pixels, WIDTH, HEIGHT);
         }
 
-        lights.clear();
-
         ShaderManager.draw(pixels);
-
-//        toAdd.add(bird.getPoint());
-//        for (Point point : toAdd) {
-//            for (int x = point.getX() - 75; x < point.getX() + 75; x++) {
-//                for (int y = point.getY() - 75; y < point.getY() + 75; y++) {
-//                    if (lights.get(x + y * WIDTH) != null) {
-//                        lights.put(x + y * WIDTH, lights.get(x + y * WIDTH) + 1);
-//                    } else {
-//                        lights.put(x + y * WIDTH, 3);
-//                    }
-//                }
-//            }
-//        }
-//
-//        toAdd.clear();
-//
-//        for (java.util.Map.Entry<Integer, Integer> entry : lights.entrySet()) {
-//            if (entry.getKey() >= WIDTH * HEIGHT || entry.getKey() < 0) {
-//                continue;
-//            }
-//            int color = unharmed[entry.getKey()];
-//            int r = (color & 0xff0000) >> 16;
-//            int g = (color & 0xff00) >> 8;
-//            int b = (color & 0xff);
-//
-//            r *= (1.0 / entry.getValue());
-//            g *= (1.0 / entry.getValue());
-//            b *= (1.0 / entry.getValue());
-//
-//            if (r > 255)
-//                r = 255;
-//            if (g > 255)
-//                g = 255;
-//            if (b > 255)
-//                b = 255;
-//
-//            pixels[entry.getKey()] = r << 16 | g << 8 | b;
-//        }
-
     }
 
     public static void main(String[] args) {
-        Test2 game = new Test2();
+        GameManager game = new GameManager();
         game.frame = new JFrame();
         game.frame.setResizable(false);
         game.frame.setTitle(game.TITLE);
@@ -274,4 +215,14 @@ public class Test2 extends Canvas implements Runnable, MouseListener, KeyListene
     public void keyTyped(KeyEvent event) {
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mouse.point.setX(e.getX());
+        mouse.point.setY(e.getY());
+    }
 }

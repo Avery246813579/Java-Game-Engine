@@ -1,21 +1,18 @@
 package co.frostbyte.jge.shaders;
 
 import co.frostbyte.jge.Sprite;
-import co.frostbyte.jge.Test2;
+import co.frostbyte.jge.GameManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShaderManager {
-    public static boolean ENABLED = false;
-
-    // 24 = Dark and 1 - Light
+    public static boolean ENABLED = true;
     public static int ALPHA = 12;
     public static double POST_ALPHA = 1.0 / ALPHA;
-
-    public void update() {
-
-    }
+    public static List<StaticShade> STATIC_SHADES = new ArrayList<>();
 
     public static void draw(int[] pixels) {
         if (!ENABLED) {
@@ -24,9 +21,9 @@ public class ShaderManager {
 
         int[] preRender = pixels.clone();
 
-        for (int x = 0; x < Test2.WIDTH; x++) {
-            for (int y = 0; y < Test2.HEIGHT; y++) {
-                int color = pixels[x + y * Test2.WIDTH];
+        for (int x = 0; x < GameManager.WIDTH; x++) {
+            for (int y = 0; y < GameManager.HEIGHT; y++) {
+                int color = pixels[x + y * GameManager.WIDTH];
                 int r = (color & 0xff0000) >> 16;
                 int g = (color & 0xff00) >> 8;
                 int b = (color & 0xff);
@@ -42,12 +39,12 @@ public class ShaderManager {
                 if (b > 255)
                     b = 255;
 
-                pixels[x + y * Test2.WIDTH] = r << 16 | g << 8 | b;
+                pixels[x + y * GameManager.WIDTH] = r << 16 | g << 8 | b;
             }
         }
 
         Map<Integer, Integer> lighting = new HashMap<>();
-        for (Sprite sprite : Test2.sprites) {
+        for (Sprite sprite : GameManager.sprites) {
             Shade shade = (Shade) sprite.getComponent(Shade.class);
 
             if (shade != null) {
@@ -55,8 +52,12 @@ public class ShaderManager {
             }
         }
 
+        for (StaticShade shade : STATIC_SHADES){
+            shade.shade.draw(pixels, lighting, shade.point);
+        }
+
         for (java.util.Map.Entry<Integer, Integer> entry : lighting.entrySet()) {
-            if (entry.getKey() >= Test2.WIDTH * Test2.HEIGHT || entry.getKey() < 0) {
+            if (entry.getKey() >= GameManager.WIDTH * GameManager.HEIGHT || entry.getKey() < 0) {
                 continue;
             }
             int color = preRender[entry.getKey()];

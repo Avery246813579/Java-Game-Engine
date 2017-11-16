@@ -15,6 +15,7 @@ I am current have worked on two games. Those are:
 
 ## TODO 
 - Shaders
+- Canvas
 - Input with listeners
 - Animations
 - co.frostbyte.jge.Sprite with Collisions

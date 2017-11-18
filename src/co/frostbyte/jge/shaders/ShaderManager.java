@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ShaderManager {
-    public static boolean ENABLED = false;
+    public static boolean ENABLED = true;
     public static int ALPHA = 3;
     public static double POST_ALPHA = 1.0 / ALPHA;
     public static List<StaticShade> STATIC_SHADES = new ArrayList<>();

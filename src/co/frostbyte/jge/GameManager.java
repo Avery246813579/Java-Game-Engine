@@ -34,6 +34,8 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     private StaticShade mouse = new StaticShade(new Point(0, 0), new Square());
     private Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
             "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
+    private Entity entity2 = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
+            "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
 
     private Thread thread;
     private boolean running = false;
@@ -55,8 +57,10 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         sprites.add(bird);
         sprites.add(bird2);
         bird.getComponents().add(new Square());
-//        bird2.getComponents().add(new Square());
         ShaderManager.STATIC_SHADES.add(mouse);
+
+        entity2.getPoint().setX(100);
+        entity2.getPoint().setY(100);
     }
 
     public synchronized void start() {
@@ -134,6 +138,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
         entity.update();
         bird2.move();
+        entity2.update();
     }
 
     public void render() {
@@ -159,6 +164,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
         ShaderManager.draw(pixels);
         entity.draw(pixels);
+        entity2.draw(pixels);
     }
 
     public static void main(String[] args) {

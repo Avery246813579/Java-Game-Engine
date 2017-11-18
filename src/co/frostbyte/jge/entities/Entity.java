@@ -47,4 +47,8 @@ public class Entity {
             }
         }
     }
+
+    public Point getPoint() {
+        return point;
+    }
 }

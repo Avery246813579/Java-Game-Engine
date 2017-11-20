@@ -1,6 +1,6 @@
 package co.frostbyte.jge.shaders;
 
-import co.frostbyte.jge.Sprite;
+import co.frostbyte.jge.entities.Sprite;
 import co.frostbyte.jge.GameManager;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ShaderManager {
-    public static boolean ENABLED = true;
+    public static boolean ENABLED = false;
     public static int ALPHA = 3;
     public static double POST_ALPHA = 1.0 / ALPHA;
     public static List<StaticShade> STATIC_SHADES = new ArrayList<>();
@@ -43,7 +43,7 @@ public class ShaderManager {
             }
         }
 
-        Map<Integer, Integer> lighting = new HashMap<>();
+        Map<Integer, Double> lighting = new HashMap<>();
         for (Sprite sprite : GameManager.sprites) {
             Shade shade = (Shade) sprite.getComponent(Shade.class);
 
@@ -56,7 +56,7 @@ public class ShaderManager {
             shade.shade.draw(pixels, lighting, shade.point);
         }
 
-        for (java.util.Map.Entry<Integer, Integer> entry : lighting.entrySet()) {
+        for (java.util.Map.Entry<Integer, Double> entry : lighting.entrySet()) {
             if (entry.getKey() >= GameManager.WIDTH * GameManager.HEIGHT || entry.getKey() < 0) {
                 continue;
             }

@@ -1,5 +1,7 @@
 package co.frostbyte.jge;
 
+import co.frostbyte.jge.entities.Entity;
+import co.frostbyte.jge.entities.Sprite;
 import co.frostbyte.jge.shaders.ShaderManager;
 import co.frostbyte.jge.shaders.Square;
 import co.frostbyte.jge.shaders.StaticShade;
@@ -20,7 +22,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     public final static int WIDTH = 800;
     public final static int HEIGHT = WIDTH / 16 * 10;
-    public final static String TITLE = "Genesis";
+    public final static String TITLE = "Test Game";
     public final static int SCALE = 1;
 
     private List<Point> toAdd = new ArrayList<Point>();
@@ -30,6 +32,8 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     private List<Integer> keyDown = new ArrayList<>();
     public static List<Sprite> sprites = new ArrayList<>();
     private StaticShade mouse = new StaticShade(new Point(0, 0), new Square());
+    private Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
+            "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
 
     private Thread thread;
     private boolean running = false;
@@ -128,6 +132,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
             }
         }
 
+        entity.update();
         bird2.move();
     }
 
@@ -148,11 +153,12 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public void draw() {
         trump.draw(pixels, WIDTH, HEIGHT);
 
-        for (Sprite sprite : sprites){
+        for (Sprite sprite : sprites) {
             sprite.draw(pixels, WIDTH, HEIGHT);
         }
 
         ShaderManager.draw(pixels);
+        entity.draw(pixels);
     }
 
     public static void main(String[] args) {

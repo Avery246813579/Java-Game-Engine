@@ -1,5 +1,6 @@
-package co.frostbyte.jge;
+package co.frostbyte.jge.entities;
 
+import co.frostbyte.jge.Point;
 import co.frostbyte.jge.components.Component;
 
 import java.awt.image.BufferedImage;

@@ -17,7 +17,7 @@ I am current have worked on two games. Those are:
 - Animations
 - Entities
 - Draw Text
-- co.frostbyte.jge.Sprite with Collisions
+- co.frostbyte.jge.entities.Sprite with Collisions
 - Canvas with Viewport
 - Input with listeners
 

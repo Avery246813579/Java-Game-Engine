@@ -6,16 +6,16 @@ import co.frostbyte.jge.shaders.ShaderManager;
 import co.frostbyte.jge.shaders.Square;
 import co.frostbyte.jge.shaders.StaticShade;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.*;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.xml.soap.Text;
 
 public class GameManager extends Canvas implements Runnable, MouseListener, KeyListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
@@ -31,6 +31,8 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     private Sprite trump = new Sprite("/TEST.jpg");
     private List<Integer> keyDown = new ArrayList<>();
     public static List<Sprite> sprites = new ArrayList<>();
+    public static List<TextAsset> textAssets = new ArrayList<>();
+
     private StaticShade mouse = new StaticShade(new Point(0, 0), new Square());
     private Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
             "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
@@ -151,6 +153,13 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         draw();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
+        for (TextAsset textAsset : textAssets){
+            g.setColor(textAsset.getColor());
+            g.setFont(textAsset.getFont());
+
+            g.drawString(textAsset.getText(), textAsset.getPoint().getX(), textAsset.getPoint().getY());
+        }
+
         g.dispose();
         bs.show();
     }
@@ -197,7 +206,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        textAssets.add(new TextAsset("I love cats", new Point(e.getX(), e.getY()), Color.BLUE, 20));
     }
 
     @Override

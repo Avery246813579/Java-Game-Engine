@@ -1,6 +1,6 @@
 package co.frostbyte.jge.shaders;
 
-import co.frostbyte.jge.Point;
+import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.GameManager;
 
 import java.util.Map;
@@ -12,8 +12,16 @@ public class Square extends Shade {
             return;
         }
 
-        for (int x = point.getX() - 75; x < point.getX() + 75; x++) {
-            for (int y = point.getY() - 75; y < point.getY() + 75; y++) {
+        for (int x = (int) point.getX() - 75; x < point.getX() + 75; x++) {
+            if (x < 0 || x > GameManager.WIDTH){
+                continue;
+            }
+
+            for (int y = (int) point.getY() - 75; y < point.getY() + 75; y++) {
+                if (y < 0 || y > GameManager.HEIGHT){
+                    continue;
+                }
+
                 lights.put(x + y * GameManager.WIDTH, (double) 1);
             }
         }

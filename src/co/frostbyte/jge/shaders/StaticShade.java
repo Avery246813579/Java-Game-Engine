@@ -1,6 +1,6 @@
 package co.frostbyte.jge.shaders;
 
-import co.frostbyte.jge.Point;
+import co.frostbyte.jge.math.Point;
 
 public class StaticShade {
     public Point point;

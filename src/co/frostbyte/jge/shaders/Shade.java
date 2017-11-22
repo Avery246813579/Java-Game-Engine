@@ -1,6 +1,6 @@
 package co.frostbyte.jge.shaders;
 
-import co.frostbyte.jge.Point;
+import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.components.Component;
 
 import java.util.Map;

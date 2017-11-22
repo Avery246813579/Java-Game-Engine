@@ -2,6 +2,7 @@ package co.frostbyte.jge;
 
 import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.entities.Sprite;
+import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.shaders.ShaderManager;
 import co.frostbyte.jge.shaders.Square;
 import co.frostbyte.jge.shaders.StaticShade;
@@ -31,7 +32,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public static List<Sprite> sprites = new ArrayList<>();
     public static List<TextAsset> textAssets = new ArrayList<>();
 
-    private StaticShade mouse = new StaticShade(new Point(0, 0), new Square());
+    private StaticShade mouse = new StaticShade(new co.frostbyte.jge.math.Point(0, 0), new Square());
     private Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
             "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
     private Entity entity2 = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
@@ -120,19 +121,19 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
             int code = iter.next();
 
             if (code == KeyEvent.VK_RIGHT) {
-                bird.getPoint().moveX(5);
+                entity.getPoint().moveX(5);
             }
 
             if (code == KeyEvent.VK_LEFT) {
-                bird.getPoint().moveX(-5);
+                entity.getPoint().moveX(-5);
             }
 
             if (code == KeyEvent.VK_UP) {
-                bird.getPoint().moveY(-5);
+                entity.getPoint().moveY(-5);
             }
 
             if (code == KeyEvent.VK_DOWN) {
-                bird.getPoint().moveY(5);
+                entity.getPoint().moveY(5);
             }
         }
 
@@ -154,7 +155,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         for (TextAsset textAsset : textAssets){
             g.setColor(textAsset.getColor());
             g.setFont(textAsset.getFont());
-            g.drawString(textAsset.getText(), textAsset.getPoint().getX(), textAsset.getPoint().getY());
+            g.drawString(textAsset.getText(), (int) textAsset.getPoint().getX(), (int) textAsset.getPoint().getY());
         }
 
         g.dispose();

@@ -1,6 +1,6 @@
 package co.frostbyte.jge.entities;
 
-import co.frostbyte.jge.Point;
+import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.components.Component;
 
 import java.awt.image.BufferedImage;
@@ -33,15 +33,15 @@ public class Sprite {
             return;
         }
 
-        for (int x = point.getX(); x < point.getX() + width; x++) {
+        for (int x = (int) point.getX(); x < point.getX() + width; x++) {
             if (x < 0 || x > screenWidth - 1)
                 break;
 
-            for (int y = point.getY(); y < point.getY() + height; y++) {
+            for (int y = (int) point.getY(); y < point.getY() + height; y++) {
                 if (y < 0 || y > screenHeight - 1)
                     continue;
 
-                int pixel = this.pixels[(x - point.getX()) + (y - point.getY()) * width];
+                int pixel = this.pixels[(x - (int) point.getX()) + (y - (int) point.getY()) * width];
 
                 if (pixel == 0) {
                     continue;

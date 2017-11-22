@@ -2,3 +2,5 @@
 .idea
 Java Game Engine.iml
 out
+src/Item.java
+src/VendingMachine.java

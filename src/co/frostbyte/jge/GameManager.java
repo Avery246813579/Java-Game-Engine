@@ -15,7 +15,6 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.xml.soap.Text;
 
 public class GameManager extends Canvas implements Runnable, MouseListener, KeyListener, MouseMotionListener {
     private static final long serialVersionUID = 1L;
@@ -25,7 +24,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public final static String TITLE = "Test Game";
     public final static int SCALE = 1;
 
-    private List<Point> toAdd = new ArrayList<Point>();
     private Sprite bird = new Sprite("/bird.png");
     private Sprite bird2 = new Sprite("/bird.png");
     private Sprite trump = new Sprite("/TEST.jpg");
@@ -156,7 +154,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         for (TextAsset textAsset : textAssets){
             g.setColor(textAsset.getColor());
             g.setFont(textAsset.getFont());
-
             g.drawString(textAsset.getText(), textAsset.getPoint().getX(), textAsset.getPoint().getY());
         }
 

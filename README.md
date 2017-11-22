@@ -14,7 +14,6 @@ I am current have worked on two games. Those are:
 - [Solenoid](https://github.com/Avery246813579/Solenoid) - A game I wrote for Ludum Dare a few years back. Also has a custom engine
 
 ## TODO 
-- Draw Text
 - co.frostbyte.jge.entities.Sprite with Collisions
 - Canvas with Viewport
 - Text Attached to Canvas vs Viewport

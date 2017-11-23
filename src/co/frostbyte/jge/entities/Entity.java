@@ -1,11 +1,20 @@
 package co.frostbyte.jge.entities;
 
 import co.frostbyte.jge.GameManager;
+import co.frostbyte.jge.components.Component;
+import co.frostbyte.jge.display.Animation;
+import co.frostbyte.jge.display.Frame;
 import co.frostbyte.jge.math.Point;
+import co.frostbyte.jge.math.Velocity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Entity {
     private Animation animation;
     private Point point = new Point();
+    private Velocity vector = new Velocity();
+    private List<Component> components = new ArrayList<>();
 
     public Entity(Frame[] frames) {
         animation = new Animation(frames);
@@ -22,7 +31,12 @@ public class Entity {
     }
 
     public void update() {
+        updateMovement();
         animation.update();
+    }
+
+    public void updateMovement(){
+
     }
 
     public void draw(int[] pixels) {
@@ -48,7 +62,21 @@ public class Entity {
         }
     }
 
+    public Component getComponent(Class<?> target){
+        for(Component component : components){
+            if (target.isAssignableFrom(component.getClass())){
+                return component;
+            }
+        }
+
+        return null;
+    }
+
     public Point getPoint() {
         return point;
+    }
+
+    public List<Component> getComponents() {
+        return components;
     }
 }

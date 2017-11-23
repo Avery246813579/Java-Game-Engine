@@ -1,4 +1,4 @@
-package co.frostbyte.jge.entities;
+package co.frostbyte.jge.display;
 
 public class Frame {
     private ImageAsset image;

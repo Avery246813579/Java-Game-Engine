@@ -1,4 +1,4 @@
-package co.frostbyte.jge.entities;
+package co.frostbyte.jge.display;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

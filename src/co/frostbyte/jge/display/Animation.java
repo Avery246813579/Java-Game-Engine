@@ -1,4 +1,4 @@
-package co.frostbyte.jge.entities;
+package co.frostbyte.jge.display;
 
 public class Animation {
     private Frame[] frames;

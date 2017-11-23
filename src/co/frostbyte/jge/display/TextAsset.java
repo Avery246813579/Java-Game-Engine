@@ -1,4 +1,4 @@
-package co.frostbyte.jge;
+package co.frostbyte.jge.display;
 
 import co.frostbyte.jge.math.Point;
 

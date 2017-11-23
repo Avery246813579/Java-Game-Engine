@@ -19,6 +19,7 @@ I am current have worked on two games. Those are:
 - Text Attached to Canvas vs Viewport
 - Input with listeners
 
+- Custom Font 
 - Improve Shader Speed
 
 Games I want to make: 

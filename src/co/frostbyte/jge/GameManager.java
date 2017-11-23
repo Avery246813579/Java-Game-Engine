@@ -1,5 +1,7 @@
 package co.frostbyte.jge;
 
+import co.frostbyte.jge.components.CollisionDetection;
+import co.frostbyte.jge.display.TextAsset;
 import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.entities.Sprite;
 import co.frostbyte.jge.math.Point;
@@ -29,7 +31,8 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     private Sprite bird2 = new Sprite("/bird.png");
     private Sprite trump = new Sprite("/TEST.jpg");
     private List<Integer> keyDown = new ArrayList<>();
-    public static List<Sprite> sprites = new ArrayList<>();
+
+    public static List<Entity> entities = new ArrayList<>();
     public static List<TextAsset> textAssets = new ArrayList<>();
 
     private StaticShade mouse = new StaticShade(new co.frostbyte.jge.math.Point(0, 0), new Square());
@@ -55,9 +58,13 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         addKeyListener(this);
         addMouseMotionListener(this);
 
-        sprites.add(bird);
-        sprites.add(bird2);
-        bird.getComponents().add(new Square());
+        entities.add(entity);
+        entities.add(entity2);
+
+        entity.getComponents().add(new Square());
+        entity.getComponents().add(new CollisionDetection());
+        entity2.getComponents().add(new CollisionDetection());
+
         ShaderManager.STATIC_SHADES.add(mouse);
 
         entity2.getPoint().setX(100);
@@ -165,13 +172,11 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public void draw() {
         trump.draw(pixels, WIDTH, HEIGHT);
 
-        for (Sprite sprite : sprites) {
-            sprite.draw(pixels, WIDTH, HEIGHT);
+        for (Entity entity : entities) {
+            entity.draw(pixels);
         }
 
         ShaderManager.draw(pixels);
-        entity.draw(pixels);
-        entity2.draw(pixels);
     }
 
     public static void main(String[] args) {

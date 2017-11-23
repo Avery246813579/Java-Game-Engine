@@ -1,6 +1,6 @@
 package co.frostbyte.jge.shaders;
 
-import co.frostbyte.jge.entities.Sprite;
+import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.GameManager;
 
 import java.util.ArrayList;
@@ -44,11 +44,11 @@ public class ShaderManager {
         }
 
         Map<Integer, Double> lighting = new HashMap<>();
-        for (Sprite sprite : GameManager.sprites) {
-            Shade shade = (Shade) sprite.getComponent(Shade.class);
+        for (Entity entity : GameManager.entities) {
+            Shade shade = (Shade) entity.getComponent(Shade.class);
 
             if (shade != null) {
-                shade.draw(pixels, lighting, sprite.getPoint());
+                shade.draw(pixels, lighting, entity.getPoint());
             }
         }
 

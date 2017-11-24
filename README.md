@@ -16,10 +16,10 @@ I am current have worked on two games. Those are:
 ## TODO 
 - co.frostbyte.jge.entities.Sprite with Collisions
 - Canvas with Viewport
-- Text Attached to Canvas vs Viewport
 - Input with listeners
 
 - Custom Font 
+- Text Attached to Canvas vs Viewport
 - Improve Shader Speed
 
 Games I want to make: 

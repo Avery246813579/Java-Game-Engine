@@ -21,6 +21,7 @@ I am current have worked on two games. Those are:
 - Custom Font 
 - Text Attached to Canvas vs Viewport
 - Improve Shader Speed
+- Language and Text
 
 Games I want to make: 
 - Animal Crossing

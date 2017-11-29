@@ -39,6 +39,8 @@ This section contains a list of things I want to add to this engine!
 - Improve Shader Speed
 - More advanced collision with more types and better detection
 
+#### Bugs
+- If you get too close with new close hitbox detection you can get stuck
 
 Games I want to make: 
 - Animal Crossing

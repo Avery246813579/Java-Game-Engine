@@ -63,7 +63,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
         entity.getComponents().add(new Square());
         entity.getComponents().add(new CollisionDetection());
-//        entity2.getComponents().add(new CollisionDetection());
+        entity2.getComponents().add(new CollisionDetection());
 
 //        ShaderManager.STATIC_SHADES.add(mouse);
 

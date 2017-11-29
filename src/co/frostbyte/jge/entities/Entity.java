@@ -57,6 +57,23 @@ public class Entity {
 
             if (getMoveHitbox().intersects(entity.getHitbox())) {
                 velocity.stop();
+
+                // New Two If/Elif blocks checks if we can move any closer before we intersect!
+
+                // Check the X Axis
+                if (entity.getPoint().getX() - (getPoint().getX() + getWidth()) > 1){
+                    getVelocity().setX(entity.getPoint().getX() - (getPoint().getX() + getWidth()));
+                }else if (getPoint().getX() - (entity.getPoint().getX() + entity.getWidth()) > 0){
+                    getVelocity().setX(getPoint().getX() - (entity.getPoint().getX() + entity.getWidth()) - 1);
+                }
+
+                // Checks the Y Axis
+                if (entity.getPoint().getY() - (getPoint().getY() + getHeight()) > 1){
+                    getVelocity().setY(entity.getPoint().getY() - (getPoint().getY() + getHeight()));
+                }else if (getPoint().getY() - (entity.getPoint().getY() + entity.getHeight()) > 0){
+                    getVelocity().setY(getPoint().getY() - (entity.getPoint().getY() + entity.getHeight()) - 1);
+                }
+
             }
         }
     }

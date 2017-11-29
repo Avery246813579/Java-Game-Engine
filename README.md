@@ -14,14 +14,24 @@ I am current have worked on two games. Those are:
 - [Solenoid](https://github.com/Avery246813579/Solenoid) - A game I wrote for Ludum Dare a few years back. Also has a custom engine
 
 ## TODO 
-- co.frostbyte.jge.entities.Sprite with Collisions
-- Canvas with Viewport
-- Input with listeners
+This section contains a list of things I want to add to this engine!
 
-- Custom Font 
-- Text Attached to Canvas vs Viewport
-- Improve Shader Speed
+#### Features
+- Canvas with Viewport
+- Maps
+- Terrain 
 - Language and Text
+- Music and Sound
+- Projectiles
+- Backgrounds
+- Custom Font
+- Text Attached to Canvas vs Viewport
+- Input with listeners
+- Sprite Sheet
+
+#### Enhances
+- Improve Shader Speed
+
 
 Games I want to make: 
 - Animal Crossing

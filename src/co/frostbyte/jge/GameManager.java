@@ -124,23 +124,28 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public void update() {
         Iterator<Integer> iter = keyDown.iterator();
 
+        if (!iter.hasNext()){
+            entity.getVelocity().setX(0);
+            entity.getVelocity().setY(0);
+        }
+
         while (iter.hasNext()) {
             int code = iter.next();
 
             if (code == KeyEvent.VK_RIGHT) {
-                entity.getPoint().moveX(5);
+                entity.getVelocity().setX(5);
             }
 
             if (code == KeyEvent.VK_LEFT) {
-                entity.getPoint().moveX(-5);
+                entity.getVelocity().setX(-5);
             }
 
             if (code == KeyEvent.VK_UP) {
-                entity.getPoint().moveY(-5);
+                entity.getVelocity().setY(-5);
             }
 
             if (code == KeyEvent.VK_DOWN) {
-                entity.getPoint().moveY(5);
+                entity.getVelocity().setY(5);
             }
         }
 
@@ -159,7 +164,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         draw();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
-        for (TextAsset textAsset : textAssets){
+        for (TextAsset textAsset : textAssets) {
             g.setColor(textAsset.getColor());
             g.setFont(textAsset.getFont());
             g.drawString(textAsset.getText(), (int) textAsset.getPoint().getX(), (int) textAsset.getPoint().getY());
@@ -209,7 +214,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     @Override
     public void mousePressed(MouseEvent e) {
-        textAssets.add(new TextAsset("I love cats", new Point(e.getX(), e.getY()), Color.BLUE, 20));
+//        textAssets.add(new TextAsset("I love cats", new Point(e.getX(), e.getY()), Color.BLUE, 20));
     }
 
     @Override

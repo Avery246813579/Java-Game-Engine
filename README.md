@@ -23,17 +23,19 @@ I am current have worked on two games. Those are:
 This section contains a list of things I want to add to this engine!
 
 #### Features
-- Canvas with Viewport
-- Maps
-- Terrain 
-- Language and Text
+- Maps (Levels)
+- Viewport (Camera)
+- Terrain ()
 - Music and Sound
-- Projectiles
-- Backgrounds
 - Custom Font
+- Projectiles
 - Text Attached to Canvas vs Viewport
+- Language and Text
+- Backgrounds
 - Input with listeners
 - Sprite Sheet
+- Tilemap
+- AI
 
 #### Enhances
 - Improve Shader Speed
@@ -50,3 +52,4 @@ Games I want to make:
 - Cuphead
 - League of Legends 
 - Civ
+- Undertale

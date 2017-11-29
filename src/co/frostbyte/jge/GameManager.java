@@ -4,7 +4,6 @@ import co.frostbyte.jge.components.CollisionDetection;
 import co.frostbyte.jge.display.TextAsset;
 import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.entities.Sprite;
-import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.shaders.ShaderManager;
 import co.frostbyte.jge.shaders.Square;
 import co.frostbyte.jge.shaders.StaticShade;
@@ -133,19 +132,19 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
             int code = iter.next();
 
             if (code == KeyEvent.VK_RIGHT) {
-                entity.getVelocity().setX(5);
+                entity.getVelocity().setX(2);
             }
 
             if (code == KeyEvent.VK_LEFT) {
-                entity.getVelocity().setX(-5);
+                entity.getVelocity().setX(-2);
             }
 
             if (code == KeyEvent.VK_UP) {
-                entity.getVelocity().setY(-5);
+                entity.getVelocity().setY(-2);
             }
 
             if (code == KeyEvent.VK_DOWN) {
-                entity.getVelocity().setY(5);
+                entity.getVelocity().setY(2);
             }
         }
 

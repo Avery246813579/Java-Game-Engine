@@ -51,7 +51,7 @@ public class Entity {
         }
 
         for (Entity entity : GameManager.entities) {
-            if (entity == this) {
+            if (entity == this || !entity.hasComponent(CollisionDetection.class)) {
                 continue;
             }
 

@@ -1,5 +1,7 @@
 # Java Game Engine
-A game engine I am working on in my free time!
+A game engine I am working on in my free time! This engine is currently
+only in two dimensions but I plan to implement it into three dimensions
+soon!
 
 ## How it works so far
 #### Rendering Images
@@ -7,6 +9,10 @@ We render images by keeping a pixel list of all the pixels on the screen. When w
 
 #### Shaders
 We have a map of locations and light we want the location to be. We then go to all those locations and make them lighter.
+
+#### Collision
+Each sprite has it's own hitbox and when the entity tries to move
+we check all the other entities hitboxs that have a hitbox component
 
 ## Game Colllection
 I am current have worked on two games. Those are:
@@ -31,6 +37,7 @@ This section contains a list of things I want to add to this engine!
 
 #### Enhances
 - Improve Shader Speed
+- More advanced collision with more types and better detection
 
 
 Games I want to make: 

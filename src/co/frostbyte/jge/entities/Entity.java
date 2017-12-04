@@ -5,6 +5,7 @@ import co.frostbyte.jge.components.CollisionDetection;
 import co.frostbyte.jge.components.Component;
 import co.frostbyte.jge.display.Animation;
 import co.frostbyte.jge.display.Frame;
+import co.frostbyte.jge.map.GameMap;
 import co.frostbyte.jge.math.Point;
 import co.frostbyte.jge.math.Velocity;
 
@@ -18,12 +19,13 @@ public class Entity {
     private Point point = new Point();
     private Velocity velocity = new Velocity();
     private List<Component> components = new ArrayList<>();
+    private GameMap gameMap;
 
     public Entity(Frame[] frames) {
         animation = new Animation(frames);
     }
 
-    public Entity(String[] locations, short delay) {
+    public Entity(String[] locations, short delay, GameMap gameMap) {
         Frame[] frames = new Frame[locations.length];
 
         for (int i = 0; i < locations.length; i++) {
@@ -31,6 +33,7 @@ public class Entity {
         }
 
         animation = new Animation(frames);
+        this.gameMap = gameMap;
     }
 
     public void update() {
@@ -50,7 +53,7 @@ public class Entity {
             return;
         }
 
-        for (Entity entity : GameManager.entities) {
+        for (Entity entity : gameMap.getEntities()) {
             if (entity == this || !entity.hasComponent(CollisionDetection.class)) {
                 continue;
             }

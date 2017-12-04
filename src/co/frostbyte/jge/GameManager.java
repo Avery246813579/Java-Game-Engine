@@ -1,12 +1,8 @@
 package co.frostbyte.jge;
 
-import co.frostbyte.jge.components.CollisionDetection;
 import co.frostbyte.jge.display.TextAsset;
 import co.frostbyte.jge.entities.Entity;
-import co.frostbyte.jge.entities.Sprite;
-import co.frostbyte.jge.shaders.ShaderManager;
-import co.frostbyte.jge.shaders.Square;
-import co.frostbyte.jge.shaders.StaticShade;
+import co.frostbyte.jge.map.GameMap;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -26,19 +22,9 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public final static String TITLE = "Test Game";
     public final static int SCALE = 1;
 
-    private Sprite bird = new Sprite("/bird.png");
-    private Sprite bird2 = new Sprite("/bird.png");
-    private Sprite trump = new Sprite("/TEST.jpg");
     private List<Integer> keyDown = new ArrayList<>();
 
-    public static List<Entity> entities = new ArrayList<>();
     public static List<TextAsset> textAssets = new ArrayList<>();
-
-    private StaticShade mouse = new StaticShade(new co.frostbyte.jge.math.Point(0, 0), new Square());
-    private Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
-            "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
-    private Entity entity2 = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
-            "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15);
 
     private Thread thread;
     private boolean running = false;
@@ -46,6 +32,11 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private JFrame frame;
+
+    private List<GameMap> gameMaps = new ArrayList<>(Arrays.asList(new GameMap()));
+    private Entity entity = gameMaps.get(0).entity;
+
+    private int currentMap = 0;
 
 
     public GameManager() {
@@ -56,18 +47,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         addMouseListener(this);
         addKeyListener(this);
         addMouseMotionListener(this);
-
-        entities.add(entity);
-        entities.add(entity2);
-
-        entity.getComponents().add(new Square());
-        entity.getComponents().add(new CollisionDetection());
-        entity2.getComponents().add(new CollisionDetection());
-
-//        ShaderManager.STATIC_SHADES.add(mouse);
-
-        entity2.getPoint().setX(100);
-        entity2.getPoint().setY(100);
     }
 
     public synchronized void start() {
@@ -149,8 +128,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         }
 
         entity.update();
-        bird2.move();
-        entity2.update();
     }
 
     public void render() {
@@ -174,13 +151,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     }
 
     public void draw() {
-        trump.draw(pixels, WIDTH, HEIGHT);
-
-        for (Entity entity : entities) {
-            entity.draw(pixels);
-        }
-
-        ShaderManager.draw(pixels);
+        gameMaps.get(currentMap).draw(pixels);
     }
 
     public static void main(String[] args) {
@@ -213,7 +184,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     @Override
     public void mousePressed(MouseEvent e) {
-//        textAssets.add(new TextAsset("I love cats", new Point(e.getX(), e.getY()), Color.BLUE, 20));
     }
 
     @Override
@@ -250,7 +220,6 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouse.point.setX(e.getX());
-        mouse.point.setY(e.getY());
+
     }
 }

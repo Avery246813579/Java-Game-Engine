@@ -36,6 +36,7 @@ This section contains a list of things I want to add to this engine!
 - Sprite Sheet
 - Tilemap
 - AI
+- Particle Effects 
 
 #### Enhances
 - Improve Shader Speed

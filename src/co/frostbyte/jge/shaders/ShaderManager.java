@@ -2,6 +2,7 @@ package co.frostbyte.jge.shaders;
 
 import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.GameManager;
+import co.frostbyte.jge.map.GameMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,12 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ShaderManager {
-    public static boolean ENABLED = true;
-    public static int ALPHA = 3;
-    public static double POST_ALPHA = 1.0 / ALPHA;
-    public static List<StaticShade> STATIC_SHADES = new ArrayList<>();
+    public boolean ENABLED = true;
+    public int ALPHA = 3;
+    public double POST_ALPHA = 1.0 / ALPHA;
+    public List<StaticShade> STATIC_SHADES = new ArrayList<>();
+    private GameMap gameMap;
 
-    public static void draw(int[] pixels) {
+    public ShaderManager(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
+
+    public void draw(int[] pixels) {
         if (!ENABLED) {
             return;
         }
@@ -44,7 +50,7 @@ public class ShaderManager {
         }
 
         Map<Integer, Double> lighting = new HashMap<>();
-        for (Entity entity : GameManager.entities) {
+        for (Entity entity : gameMap.getEntities()) {
             Shade shade = (Shade) entity.getComponent(Shade.class);
 
             if (shade != null) {
@@ -52,7 +58,7 @@ public class ShaderManager {
             }
         }
 
-        for (StaticShade shade : STATIC_SHADES){
+        for (StaticShade shade : STATIC_SHADES) {
             shade.shade.draw(pixels, lighting, shade.point);
         }
 

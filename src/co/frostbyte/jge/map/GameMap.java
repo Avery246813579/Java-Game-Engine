@@ -12,6 +12,8 @@ import java.util.List;
 
 public class GameMap {
     private List<Entity> entities = new ArrayList<>();
+    private ViewPort viewPort = new ViewPort();
+
     public Entity entity = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
             "/Animation/IDLE_3.png", "/Animation/IDLE_4.png"}, (short) 15, this);
     private Entity entity2 = new Entity(new String[]{"/Animation/IDLE_1.png", "/Animation/IDLE_2.png",
@@ -45,10 +47,14 @@ public class GameMap {
             entity.draw(pixels);
         }
 
-        shaderManager.draw(pixels);
+        shaderManager.draw(pixels, viewPort);
     }
 
     public List<Entity> getEntities() {
         return entities;
+    }
+
+    public ViewPort getViewPort(){
+        return viewPort;
     }
 }

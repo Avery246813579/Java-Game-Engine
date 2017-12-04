@@ -64,16 +64,16 @@ public class Entity {
                 // New Two If/Elif blocks checks if we can move any closer before we intersect!
 
                 // Check the X Axis
-                if (entity.getPoint().getX() - (getPoint().getX() + getWidth()) > 1){
+                if (entity.getPoint().getX() - (getPoint().getX() + getWidth()) > 1) {
                     getVelocity().setX(entity.getPoint().getX() - (getPoint().getX() + getWidth()));
-                }else if (getPoint().getX() - (entity.getPoint().getX() + entity.getWidth()) > 0){
+                } else if (getPoint().getX() - (entity.getPoint().getX() + entity.getWidth()) > 0) {
                     getVelocity().setX(getPoint().getX() - (entity.getPoint().getX() + entity.getWidth()) - 1);
                 }
 
                 // Checks the Y Axis
-                if (entity.getPoint().getY() - (getPoint().getY() + getHeight()) > 1){
+                if (entity.getPoint().getY() - (getPoint().getY() + getHeight()) > 1) {
                     getVelocity().setY(entity.getPoint().getY() - (getPoint().getY() + getHeight()));
-                }else if (getPoint().getY() - (entity.getPoint().getY() + entity.getHeight()) > 0){
+                } else if (getPoint().getY() - (entity.getPoint().getY() + entity.getHeight()) > 0) {
                     getVelocity().setY(getPoint().getY() - (entity.getPoint().getY() + entity.getHeight()) - 1);
                 }
 
@@ -85,7 +85,7 @@ public class Entity {
         return new Rectangle((int) point.getX(), (int) point.getY(), getWidth(), getHeight());
     }
 
-    public Rectangle2D getMoveHitbox(){
+    public Rectangle2D getMoveHitbox() {
         return new Rectangle((int) (point.getX() + velocity.getX()), (int) (point.getY() + velocity.getY()), getWidth(), getHeight());
     }
 
@@ -94,11 +94,11 @@ public class Entity {
         int maxHeight = (int) point.getY() + animation.getCurrentFrame().getHeight();
 
         for (int x = (int) point.getX(); x < maxWidth; x++) {
-            if (x < 0 || x > GameManager.WIDTH - 1)
+            if (x < gameMap.getViewPort().getPoint().getX() || x > gameMap.getViewPort().getPoint().getX() + GameManager.WIDTH - 1)
                 break;
 
             for (int y = (int) point.getY(); y < maxHeight; y++) {
-                if (y < 0 || y > GameManager.HEIGHT - 1)
+                if (y < gameMap.getViewPort().getPoint().getY() || y > gameMap.getViewPort().getPoint().getY() + GameManager.HEIGHT - 1)
                     continue;
 
                 int pixel = animation.getCurrentFrame().getPixels()[(x - (int) point.getX()) + (y - (int) point.getY()) * animation.getCurrentFrame().getWidth()];
@@ -107,7 +107,7 @@ public class Entity {
                     continue;
                 }
 
-                pixels[x + y * GameManager.WIDTH] = pixel;
+                pixels[x - (int) gameMap.getViewPort().getPoint().getX() + (int) (y - gameMap.getViewPort().getPoint().getY()) * GameManager.WIDTH] = pixel;
             }
         }
     }
@@ -140,6 +140,10 @@ public class Entity {
 
     public Point getPoint() {
         return point;
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     public List<Component> getComponents() {

@@ -20,7 +20,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public final static int WIDTH = 800;
     public final static int HEIGHT = WIDTH / 16 * 10;
     public final static String TITLE = "Test Game";
-    public final static int SCALE = 1;
+    public final static double SCALE = 1;
 
     private List<Integer> keyDown = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
 
     public GameManager() {
-        Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+        Dimension size = new Dimension((int) (WIDTH * SCALE), (int) (HEIGHT * SCALE));
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
@@ -195,6 +195,22 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
     public void keyPressed(KeyEvent event) {
         if (!keyDown.contains(event.getKeyCode())) {
             keyDown.add(event.getKeyCode());
+        }
+
+        if (event.getKeyCode() ==  KeyEvent.VK_D){
+            gameMaps.get(currentMap).getViewPort().moveX(5);
+        }
+
+        if (event.getKeyCode() ==  KeyEvent.VK_A){
+            gameMaps.get(currentMap).getViewPort().moveX(-5);
+        }
+
+        if (event.getKeyCode() ==  KeyEvent.VK_W){
+            gameMaps.get(currentMap).getViewPort().moveY(-5);
+        }
+
+        if (event.getKeyCode() ==  KeyEvent.VK_S){
+            gameMaps.get(currentMap).getViewPort().moveY(5);
         }
     }
 

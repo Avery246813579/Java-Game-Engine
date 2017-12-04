@@ -3,6 +3,7 @@ package co.frostbyte.jge.shaders;
 import co.frostbyte.jge.entities.Entity;
 import co.frostbyte.jge.GameManager;
 import co.frostbyte.jge.map.GameMap;
+import co.frostbyte.jge.map.ViewPort;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class ShaderManager {
         this.gameMap = gameMap;
     }
 
-    public void draw(int[] pixels) {
+    public void draw(int[] pixels, ViewPort viewPort) {
         if (!ENABLED) {
             return;
         }
@@ -54,12 +55,12 @@ public class ShaderManager {
             Shade shade = (Shade) entity.getComponent(Shade.class);
 
             if (shade != null) {
-                shade.draw(pixels, lighting, entity.getPoint());
+                shade.draw(pixels, lighting, entity.getPoint(), viewPort);
             }
         }
 
         for (StaticShade shade : STATIC_SHADES) {
-            shade.shade.draw(pixels, lighting, shade.point);
+            shade.shade.draw(pixels, lighting, shade.point, viewPort);
         }
 
         for (java.util.Map.Entry<Integer, Double> entry : lighting.entrySet()) {

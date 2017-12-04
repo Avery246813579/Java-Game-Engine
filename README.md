@@ -23,8 +23,6 @@ I am current have worked on two games. Those are:
 This section contains a list of things I want to add to this engine!
 
 #### Features
-- Maps (Levels)
-- Viewport (Camera)
 - Terrain ()
 - Music and Sound
 - Custom Font
@@ -44,6 +42,7 @@ This section contains a list of things I want to add to this engine!
 
 #### Bugs
 - If you get too close with new close hitbox detection you can get stuck
+- Entity is removed the second it hits the edge
 
 Games I want to make: 
 - Animal Crossing

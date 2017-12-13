@@ -24,6 +24,7 @@ This section contains a list of things I want to add to this engine!
 
 #### Features
 - Terrain ()
+- Tilemap
 - Music and Sound
 - Custom Font
 - Projectiles
@@ -32,7 +33,6 @@ This section contains a list of things I want to add to this engine!
 - Backgrounds
 - Input with listeners
 - Sprite Sheet
-- Tilemap
 - AI
 - Particle Effects 
 
@@ -53,3 +53,4 @@ Games I want to make:
 - League of Legends 
 - Civ
 - Undertale
+- Hearthstone

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ShaderManager {
     public boolean ENABLED = true;
-    public int ALPHA = 3;
+    public int ALPHA = 24;
     public double POST_ALPHA = 1.0 / ALPHA;
     public List<StaticShade> STATIC_SHADES = new ArrayList<>();
     private GameMap gameMap;

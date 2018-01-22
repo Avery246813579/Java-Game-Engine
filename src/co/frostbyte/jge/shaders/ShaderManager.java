@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ShaderManager {
-    public boolean ENABLED = true;
-    public int ALPHA = 24;
+    public boolean ENABLED = false;
+    public int ALPHA = 4;
     public double POST_ALPHA = 1.0 / ALPHA;
     public List<StaticShade> STATIC_SHADES = new ArrayList<>();
     private GameMap gameMap;
@@ -27,6 +27,19 @@ public class ShaderManager {
         }
 
         int[] preRender = pixels.clone();
+        Map<Integer, Double> lighting = new HashMap<>();
+        for (Entity entity : gameMap.getEntities()) {
+            Shade shade = (Shade) entity.getComponent(Shade.class);
+
+            if (shade != null) {
+                shade.draw(pixels, lighting, entity.getPoint(), viewPort);
+            }
+        }
+
+        for (StaticShade shade : STATIC_SHADES) {
+            shade.shade.draw(pixels, lighting, shade.point, viewPort);
+        }
+
 
         for (int x = 0; x < GameManager.WIDTH; x++) {
             for (int y = 0; y < GameManager.HEIGHT; y++) {
@@ -50,23 +63,11 @@ public class ShaderManager {
             }
         }
 
-        Map<Integer, Double> lighting = new HashMap<>();
-        for (Entity entity : gameMap.getEntities()) {
-            Shade shade = (Shade) entity.getComponent(Shade.class);
-
-            if (shade != null) {
-                shade.draw(pixels, lighting, entity.getPoint(), viewPort);
-            }
-        }
-
-        for (StaticShade shade : STATIC_SHADES) {
-            shade.shade.draw(pixels, lighting, shade.point, viewPort);
-        }
-
         for (java.util.Map.Entry<Integer, Double> entry : lighting.entrySet()) {
             if (entry.getKey() >= GameManager.WIDTH * GameManager.HEIGHT || entry.getKey() < 0) {
                 continue;
             }
+
             int color = preRender[entry.getKey()];
             int r = (color & 0xff0000) >> 16;
             int g = (color & 0xff00) >> 8;
@@ -85,5 +86,9 @@ public class ShaderManager {
 
             pixels[entry.getKey()] = r << 16 | g << 8 | b;
         }
+    }
+
+    public void toggle() {
+        ENABLED = !ENABLED;
     }
 }

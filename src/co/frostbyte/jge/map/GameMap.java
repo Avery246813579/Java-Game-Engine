@@ -22,6 +22,9 @@ public class GameMap {
 
     public ShaderManager shaderManager = new ShaderManager(this);
 
+    public Tile[][] tiles = new Tile[10][10];
+    public Tile testTile = new Tile("Test.png");
+
     public GameMap() {
         entities.add(entity);
         entities.add(entity2);
@@ -30,11 +33,14 @@ public class GameMap {
         entity.getComponents().add(new CollisionDetection());
         entity2.getComponents().add(new CollisionDetection());
 
-//        ShaderManager.STATIC_SHADES.add(mouse);
+//        shaderManager.STATIC_SHADES.add(mouse);
 
         entity2.getPoint().setX(100);
         entity2.getPoint().setY(100);
-    }
+
+        tiles[0][2] = testTile;
+        tiles[1][1] = testTile;
+     }
 
     public void update() {
 
@@ -42,6 +48,23 @@ public class GameMap {
 
     public void draw(int[] pixels) {
         trump.draw(pixels, GameManager.WIDTH, GameManager.HEIGHT);
+
+        final int DIAMETER = 20;
+        int startXTile = (int) Math.floor(viewPort.getPoint().getX() / DIAMETER);
+        int startYTile = (int) Math.floor(viewPort.getPoint().getY() / DIAMETER);
+
+        for (int x = startXTile; x < 10; x++){
+            for (int y = startYTile; y < 10; y++){
+                Tile tile = tiles[y][x];
+
+                if (tile == null){
+                    continue;
+                }
+
+                tile.draw(pixels, x * 20 - (int) viewPort.getPoint().getX(), y * 20 - (int) viewPort.getPoint().getY());
+            }
+        }
+
 
         for (Entity entity : entities) {
             entity.draw(pixels);
@@ -54,7 +77,7 @@ public class GameMap {
         return entities;
     }
 
-    public ViewPort getViewPort(){
+    public ViewPort getViewPort() {
         return viewPort;
     }
 }

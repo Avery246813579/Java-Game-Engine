@@ -212,6 +212,10 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
         if (event.getKeyCode() ==  KeyEvent.VK_S){
             gameMaps.get(currentMap).getViewPort().moveY(5);
         }
+
+        if (event.getKeyCode() == KeyEvent.VK_B){
+            gameMaps.get(currentMap).shaderManager.toggle();
+        }
     }
 
     @Override

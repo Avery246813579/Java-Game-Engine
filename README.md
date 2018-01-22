@@ -25,16 +25,19 @@ This section contains a list of things I want to add to this engine!
 #### Features
 - Terrain ()
 - Tilemap
+- Map Editor and Saver
+- Collision Areas along with Areas
 - Music and Sound
 - Custom Font
+- GUI
+- Backgrounds (Mutliple)
 - Projectiles
+- Particle Effects 
 - Text Attached to Canvas vs Viewport
 - Language and Text
-- Backgrounds
 - Input with listeners
 - Sprite Sheet
 - AI
-- Particle Effects 
 
 #### Enhances
 - Improve Shader Speed

@@ -22,7 +22,7 @@ public class GameMap {
 
     public ShaderManager shaderManager = new ShaderManager(this);
 
-    public Tile[][] tiles = new Tile[10][10];
+    public Tile[][] tiles = new Tile[1000][1000];
     public Tile testTile = new Tile("Test.png");
 
     public GameMap() {
@@ -53,8 +53,8 @@ public class GameMap {
         int startXTile = (int) Math.floor(viewPort.getPoint().getX() / DIAMETER);
         int startYTile = (int) Math.floor(viewPort.getPoint().getY() / DIAMETER);
 
-        for (int x = startXTile; x < 10; x++){
-            for (int y = startYTile; y < 10; y++){
+        for (int x = startXTile; x < tiles[0].length; x++){
+            for (int y = startYTile; y < tiles.length; y++){
                 Tile tile = tiles[y][x];
 
                 if (tile == null){

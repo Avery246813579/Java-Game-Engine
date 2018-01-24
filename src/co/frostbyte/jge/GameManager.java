@@ -170,6 +170,9 @@ public class GameManager extends Canvas implements Runnable, MouseListener, KeyL
 
     @Override
     public void mouseClicked(MouseEvent event) {
+       GameMap map = gameMaps.get(currentMap);
+
+        map.tiles[(int) (event.getY() + map.getViewPort().getPoint().getY()) / 20][(int) (event.getX() + map.getViewPort().getPoint().getX()) / 20] = map.testTile;
     }
 
     @Override
